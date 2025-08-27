@@ -5,6 +5,16 @@
 
 session_start();
 
+function t(string $key): string {
+        $lang = $_SESSION['lang'] ?? 'es';
+        static $cache = [];
+        if (!isset($cache[$lang])) {
+                $file = __DIR__ . "/../../lang/{$lang}.php";
+                $cache[$lang] = file_exists($file) ? include $file : [];
+        }
+        return $cache[$lang][$key] ?? $key;
+}
+
 function getDB() {
 	static $db = null;
 	if ($db === null) {

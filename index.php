@@ -24,18 +24,18 @@ function renderPage($title, $content) {
 
 $route = $_GET['route'] ?? 'home';
 switch ($route) {
-	case 'admin':
-		ob_start();
-		require __DIR__ . '/src/admin/index.php';
-		$content = ob_get_clean();
-		renderPage('Panel Admin', $content);
-		break;
-	case 'auth':
-		ob_start();
-		require __DIR__ . '/src/auth/index.php';
-		$content = ob_get_clean();
-		renderPage('Login', $content);
-		break;
+        case 'admin':
+                ob_start();
+                require __DIR__ . '/src/admin/index.php';
+                $content = ob_get_clean();
+                renderPage(t('admin.panel'), $content);
+                break;
+        case 'auth':
+                ob_start();
+                require __DIR__ . '/src/auth/index.php';
+                $content = ob_get_clean();
+                renderPage(t('login.title'), $content);
+                break;
 	case 'panel_root':
 		ob_start();
 		require __DIR__ . '/src/panel_root/index.php';
@@ -48,7 +48,7 @@ switch ($route) {
 			.'<h1 class="display-5 text-center mb-3">Bienvenido a Indice SaaS</h1>'
 			.'<p class="lead text-center mb-4">Gestiona empresas, roles y módulos en una plataforma SaaS moderna y escalable.</p>'
 			.'<div class="d-grid gap-2">'
-			.'<a href="?route=auth" class="btn btn-primary btn-lg">Ingresar</a>'
+                        .'<a href="?route=auth" class="btn btn-primary btn-lg">' . t('login.submit') . '</a>'
 			.'<a href="?route=admin" class="btn btn-outline-secondary">Ver demo admin</a>'
 			.'<a href="?route=panel_root" class="btn btn-outline-secondary">Ver demo root</a>'
 			.'</div>'
