@@ -5,6 +5,7 @@
     },
     "scripts": {
         "lint": "phpcs --standard=PSR12 src admin panel_root",
-        "migrate": "php database/migrate.php"
+        "migrate": "php database/migrate.php",
+        "start": "php -S localhost:8000 -t public"
     }
 }
