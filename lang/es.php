@@ -1,0 +1,3 @@
+<?php
+// Traducciones español
+return [];

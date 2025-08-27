@@ -1,0 +1,17 @@
+# Proteger archivo .env
+<Files .env>
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Opcional: proteger composer.json y composer.lock
+<FilesMatch "^(composer\.json|composer\.lock)$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>
+
+# Opcional: proteger archivos de configuración
+<FilesMatch "^config.php$">
+    Order allow,deny
+    Deny from all
+</FilesMatch>

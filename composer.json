@@ -1,0 +1,10 @@
+{
+    "require": {},
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.9"
+    },
+    "scripts": {
+        "lint": "phpcs --standard=PSR12 src admin panel_root",
+        "migrate": "php database/migrate.php"
+    }
+}
