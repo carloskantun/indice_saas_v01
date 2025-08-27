@@ -1,10 +1,9 @@
-
 <?php
 // Front-controller principal
 
 // Cargar helpers y configuración
-require_once __DIR__ . '/src/core/helpers.php';
-require_once __DIR__ . '/config/routes.php';
+require_once __DIR__ . '/../src/core/helpers.php';
+require_once __DIR__ . '/../config/routes.php';
 
 // Ejemplo de router básico
 $route = $_GET['route'] ?? 'home';
