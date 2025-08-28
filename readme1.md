@@ -4,6 +4,12 @@
 
 ---
 
+## Instalación rápida
+1. Requisitos: PHP 8+, extensión PDO y MySQL.
+2. Instalar dependencias con `composer install`.
+3. Iniciar el servidor de desarrollo con `composer start`.
+4. Abrir `http://localhost:8000/install` y seguir el asistente.
+
 ## 1) Visión y objetivo
 - **Visión**: Un SaaS modular (PHP + MySQL) donde una empresa contrata un **plan** y con base en ese plan **activa módulos**. El dueño (superadmin) invita usuarios y les asigna permisos por rol/módulo.
 - **Objetivo de esta versión**:
