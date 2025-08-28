@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS invitations (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    email VARCHAR(255) NOT NULL,
+    company_id INT NOT NULL,
+    unit_id INT,
+    business_id INT,
+    role ENUM('admin', 'moderator', 'user') NOT NULL,
+    token VARCHAR(64) NOT NULL,
+    status ENUM('pending', 'accepted', 'expired') DEFAULT 'pending',
+    sent_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    expiration_date TIMESTAMP NOT NULL,
+    accepted_date TIMESTAMP NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (company_id) REFERENCES companies(id) ON DELETE CASCADE,
+    FOREIGN KEY (unit_id) REFERENCES units(id) ON DELETE SET NULL,
+    FOREIGN KEY (business_id) REFERENCES businesses(id) ON DELETE SET NULL,
+    UNIQUE KEY unique_token (token),
+    INDEX idx_email (email),
+    INDEX idx_status (status)
+);

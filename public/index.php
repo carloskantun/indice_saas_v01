@@ -1,23 +1,21 @@
 <?php
-// Front-controller principal
+/**
+ * Front-controller principal
+ * Maneja tanto rutas amigables (/auth/login) como query string (?route=auth)
+ */
 
-// Cargar helpers y configuración
+// Verificar si estamos en producción
+$isProduction = (isset($_SERVER['HTTP_HOST']) && strpos($_SERVER['HTTP_HOST'], 'indiceapp.com') !== false);
+
+// Cargar configuración y helpers
+require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../src/core/helpers.php';
 require_once __DIR__ . '/../config/routes.php';
 
-// Ejemplo de router básico
-$route = $_GET['route'] ?? 'home';
-switch ($route) {
-	case 'admin':
-		require_once __DIR__ . '/src/admin/index.php';
-		break;
-	case 'auth':
-		require_once __DIR__ . '/src/auth/index.php';
-		break;
-	case 'panel_root':
-		require_once __DIR__ . '/src/panel_root/index.php';
-		break;
-	default:
-		echo 'Bienvenido a la app Indice SaaS';
-		break;
+// Iniciar sesión si no está iniciada
+if (!headers_sent() && session_status() === PHP_SESSION_NONE) {
+    session_start();
 }
+
+// Rutear la solicitud
+route($_SERVER['REQUEST_URI']);
