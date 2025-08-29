@@ -62,7 +62,7 @@ ob_start();
         <div class="col-sm-10 col-md-8 col-lg-6 col-xl-5">
             <!-- Logo y título -->
             <div class="text-center mb-4">
-                <img src="/assets/img/logo.png" alt="Logo" height="48" class="mb-4">
+                <!-- TODO: Agrega el logo de la aplicación aquí -->
                 <h1 class="h3 mb-3 fw-normal"><?= t('login.welcome') ?></h1>
                 <p class="text-muted"><?= t('login.subtitle') ?></p>
             </div>

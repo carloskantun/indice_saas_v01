@@ -21,14 +21,17 @@ function renderPage($title, $content) {
 	echo '<meta charset="UTF-8">';
 	echo '<meta name="viewport" content="width=device-width, initial-scale=1">';
 	echo '<title>' . htmlspecialchars($title) . '</title>';
-	echo '<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">';
-	echo '</head><body>';
+        echo '<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">';
+        echo '<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">';
+        echo '<link href="/assets/css/main.css" rel="stylesheet">';
+        echo '</head><body>';
 	echo '<nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4"><div class="container-fluid"><a class="navbar-brand" href="?route=home">Indice SaaS</a></div></nav>';
 	echo '<main class="container">';
 	echo $content;
 	echo '</main>';
 	echo '<footer class="text-center mt-5 mb-3 text-muted">&copy; ' . date('Y') . ' Indice SaaS</footer>';
     echo '<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>';
+    echo '<script src="/assets/js/main.js"></script>';
     echo '</body></html>';
 }
 
