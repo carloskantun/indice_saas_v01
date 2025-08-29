@@ -4,12 +4,16 @@
  * Maneja tanto rutas amigables (/auth/login) como query string (?route=auth)
  */
 
-// Verificar si estamos en producción
-$isProduction = (isset($_SERVER['HTTP_HOST']) && strpos($_SERVER['HTTP_HOST'], 'indiceapp.com') !== false);
+// Asegurarse de que no haya salida antes de cargar helpers y sesión
+if (file_exists(__DIR__ . '/../.env')) {
+    require_once __DIR__ . '/../src/core/helpers.php';
+} else {
+    header('Location: /install/');
+    exit;
+}
 
-// Cargar configuración y helpers
+// Cargar configuración
 require_once __DIR__ . '/../config/config.php';
-require_once __DIR__ . '/../src/core/helpers.php';
 require_once __DIR__ . '/../config/routes.php';
 
 // Iniciar sesión si no está iniciada

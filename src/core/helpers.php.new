@@ -13,77 +13,6 @@ if (session_status() === PHP_SESSION_NONE && !headers_sent()) {
 }
 
 /**
- * Obtiene la lista de idiomas disponibles escaneando el directorio lang/
- */
-function getAvailableLanguages() {
-    static $languages = null;
-    
-    if ($languages === null) {
-        $languages = [];
-        $langDir = __DIR__ . '/../../lang/';
-        
-        if (is_dir($langDir)) {
-            $files = glob($langDir . '*.php');
-            foreach ($files as $file) {
-                $lang = basename($file, '.php');
-                $languages[$lang] = [
-                    'code' => $lang,
-                    'name' => t('languages.' . $lang),
-                    'file' => $file
-                ];
-            }
-        }
-    }
-    
-    return $languages;
-}
-
-/**
- * Obtiene el idioma actual del usuario
- */
-function getCurrentLanguage() {
-    return isset($_SESSION['lang']) ? $_SESSION['lang'] : 'es';
-}
-
-/**
- * Función de traducción
- */
-function t($key, $params = []) {
-    static $translations = null;
-    
-    if ($translations === null) {
-        $lang = getCurrentLanguage();
-        $langFile = __DIR__ . '/../../lang/' . $lang . '.php';
-        if (file_exists($langFile)) {
-            $translations = require $langFile;
-        } else {
-            $translations = [];
-        }
-    }
-    
-    $text = isset($translations[$key]) ? $translations[$key] : $key;
-    
-    if (!empty($params)) {
-        foreach ($params as $key => $value) {
-            $text = str_replace(':' . $key, $value, $text);
-        }
-    }
-    
-    return $text;
-}
-
-/**
- * Verifica si hay un usuario autenticado
- */
-function auth() {
-    if (!isset($_SESSION['user_id'])) {
-        header('Location: /auth/login.php');
-        exit();
-    }
-    return $_SESSION['user_id'];
-}
-
-/**
  * Lee y parsea el archivo .env
  */
 function loadEnv($path) {
@@ -141,20 +70,6 @@ function loadEnv($path) {
         error_log("Error leyendo .env: " . $e->getMessage());
         throw new Exception("Error procesando el archivo .env");
     }
-}
-
-/**
- * Obtiene la URL del panel según el rol del usuario
- */
-function getUserPanel($role) {
-    $panels = [
-        'root' => '?route=panel_root',
-        'admin' => '?route=admin',
-        'superadmin' => '?route=admin',
-        'user' => '?route=dashboard'
-    ];
-    
-    return $panels[$role] ?? '?route=dashboard';
 }
 
 /**

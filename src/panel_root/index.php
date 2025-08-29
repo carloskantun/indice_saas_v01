@@ -2,7 +2,7 @@
 /**
  * Panel Root - Gestión de planes y empresas
  */
-require_once __DIR__ . '/../core/helpers.php';
+// Los helpers ya están incluidos en el index.php principal
 
 // Verificar autenticación y rol root
 auth();

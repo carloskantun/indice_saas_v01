@@ -8,7 +8,7 @@ $db = getDB();
 // Crear usuario root
 $rootHash = password_hash('root123', PASSWORD_DEFAULT);
 $db->prepare("INSERT INTO users(name,email,password_hash,is_active) VALUES(?,?,?,1)")
-	->execute(['Root','root@dominio.com',$rootHash]);
+	->execute(['Root','root@indiceapp.com',$rootHash]);
 $rootId = $db->lastInsertId();
 
 // Crear planes demo

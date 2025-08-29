@@ -16,8 +16,40 @@ $content = $content ?? '';
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= htmlspecialchars($title) ?> - Indice SaaS</title>
+    
+    <!-- CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <style>
+        body {
+            background-color: #f8f9fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .navbar-brand {
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+        .btn-primary {
+            padding: 0.75rem 1.5rem;
+            font-weight: 500;
+        }
+        .form-control {
+            padding: 0.75rem 1rem;
+        }
+        .form-control:focus {
+            box-shadow: 0 0 0 0.25rem rgba(13,110,253,.15);
+        }
+        .card {
+            border: none;
+            border-radius: 10px;
+        }
+        .card-body {
+            padding: 2rem;
+        }
+    </style>
 </head>
 <body>
     <!-- Navbar -->

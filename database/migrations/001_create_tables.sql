@@ -5,7 +5,10 @@ CREATE TABLE users (
 	email VARCHAR(150) NOT NULL UNIQUE,
 	password_hash VARCHAR(255) NOT NULL,
 	is_active TINYINT(1) DEFAULT 1,
-	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+	status VARCHAR(20) DEFAULT 'active',
+	created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	KEY idx_email (email),
+	KEY idx_status (status)
 );
 
 CREATE TABLE companies (

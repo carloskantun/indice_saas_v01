@@ -2,7 +2,16 @@
 /**
  * Login de usuarios
  */
-require_once __DIR__ . '/../core/helpers.php';
+
+// Prevenir acceso directo
+if (!defined('BASE_PATH')) {
+    define('BASE_PATH', dirname(dirname(__DIR__)));
+}
+
+// Cargar helpers si no están cargados
+if (!function_exists('t')) {
+    require_once BASE_PATH . '/src/core/helpers.php';
+}
 
 // Si ya está autenticado, redirigir al panel correspondiente
 if (!empty($_SESSION['user_id']) && !empty($_SESSION['current_role'])) {

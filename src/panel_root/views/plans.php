@@ -2,10 +2,53 @@
 /**
  * Vista de gestión de planes
  */
+require_once __DIR__ . '/../controllers/plans_controller.php';
 
-// Obtener todos los planes
-$db = getDB();
-$plans = $db->query("SELECT * FROM plans ORDER BY price_monthly ASC")->fetchAll(PDO::FETCH_ASSOC);
+// Procesar formularios
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    try {
+        if (isset($_POST['delete'])) {
+            // Eliminar plan
+            deletePlan($_POST['delete']);
+            $_SESSION['success'] = t('root.plan_deleted');
+        } else {
+            // Crear o actualizar plan
+            $data = [
+                'name' => $_POST['name'],
+                'description' => $_POST['description'],
+                'price_monthly' => $_POST['price_monthly'],
+                'users_max' => $_POST['users_max'],
+                'units_max' => $_POST['units_max'],
+                'businesses_max' => $_POST['businesses_max'],
+                'storage_max_mb' => $_POST['storage_max_mb'],
+                'all_modules' => isset($_POST['all_modules']),
+                'modules' => $_POST['modules'] ?? [],
+                'is_active' => isset($_POST['is_active'])
+            ];
+            
+            if (isset($_POST['id'])) {
+                updatePlan($_POST['id'], $data);
+                $_SESSION['success'] = t('root.plan_updated');
+            } else {
+                createPlan($data);
+                $_SESSION['success'] = t('root.plan_created');
+            }
+        }
+        header('Location: ?action=plans');
+        exit;
+    } catch (Exception $e) {
+        $error = $e->getMessage();
+    }
+}
+
+// Obtener plan para editar si se especifica
+$plan_to_edit = null;
+if (isset($_GET['edit'])) {
+    $plan_to_edit = getPlan($_GET['edit']);
+}
+
+// Obtener lista de planes
+$plans = listPlans();
 
 // Obtener lista de módulos disponibles
 $available_modules = [

@@ -1,9 +1,19 @@
-
-
 <?php
+// Prevenir cualquier salida antes de las redirecciones
+ob_start();
+
 // Front-controller principal
+define('BASE_PATH', __DIR__);
 require_once __DIR__ . '/src/core/helpers.php';
 require_once __DIR__ . '/config/routes.php';
+
+// Verificar si hay una sesión activa antes de cualquier salida
+if (!isset($_SESSION['user_id']) && !in_array($_GET['route'] ?? '', ['auth', 'auth/login'])) {
+    header('Location: ?route=auth');
+    exit;
+}
+
+$route = $_GET['route'] ?? 'home';
 
 function renderPage($title, $content) {
 	echo '<!DOCTYPE html><html lang="es">';
@@ -18,30 +28,50 @@ function renderPage($title, $content) {
 	echo $content;
 	echo '</main>';
 	echo '<footer class="text-center mt-5 mb-3 text-muted">&copy; ' . date('Y') . ' Indice SaaS</footer>';
-	echo '<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>';
-	echo '</body></html>';
+    echo '<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>';
+    echo '</body></html>';
 }
 
-$route = $_GET['route'] ?? 'home';
+// Procesar la ruta actual
 switch ($route) {
-        case 'admin':
-                ob_start();
-                require __DIR__ . '/src/admin/index.php';
-                $content = ob_get_clean();
-                renderPage(t('admin.panel'), $content);
-                break;
-        case 'auth':
-                ob_start();
-                require __DIR__ . '/src/auth/index.php';
-                $content = ob_get_clean();
-                renderPage(t('login.title'), $content);
-                break;
-	case 'panel_root':
-		ob_start();
-		require __DIR__ . '/src/panel_root/index.php';
-		$content = ob_get_clean();
-		renderPage('Panel Root', $content);
-		break;
+    case 'admin':
+        require __DIR__ . '/src/admin/index.php';
+        $title = t('admin.panel');
+        break;
+    case 'auth':
+    case 'auth/login':
+        require __DIR__ . '/src/auth/index.php';
+        $title = t('login.title');
+        break;
+    case 'panel_root':
+        require __DIR__ . '/src/panel_root/index.php';
+        $title = 'Panel Root';
+        break;
+    default:
+        if (isset($_SESSION['user_id'])) {
+            header('Location: ?route=' . getUserPanel($_SESSION['current_role']));
+            exit;
+        } else {
+            header('Location: ?route=auth');
+            exit;
+        }
+}// Inicio del buffer para capturar la salida
+ob_start();
+
+switch ($route) {
+    case 'admin':
+        require __DIR__ . '/src/admin/index.php';
+        $title = t('admin.panel');
+        break;
+    case 'auth':
+    case 'auth/login':
+        require __DIR__ . '/src/auth/index.php';
+        $title = t('login.title');
+        break;
+    case 'panel_root':
+        require __DIR__ . '/src/panel_root/index.php';
+        $title = 'Panel Root';
+        break;
 	case 'home':
 		renderPage('Inicio', '<div class="d-flex flex-column align-items-center justify-content-center" style="min-height:60vh;">'
 			.'<div class="card shadow-lg p-4 mb-4" style="max-width:500px; width:100%;">'

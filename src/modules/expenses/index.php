@@ -2,7 +2,7 @@
 /**
  * Módulo Expenses — ejemplo
  */
-require_once __DIR__ . '/../../core/helpers.php';
+// Los helpers ya están incluidos en el index.php principal
 auth();
 checkRole(['admin','superadmin','root']);
 if (!hasPermission('expenses.view')) {
